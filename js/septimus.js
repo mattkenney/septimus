@@ -9,6 +9,7 @@ $.get("/gtfa_public/google_rail/stops.txt", function (data)
 {
     m_stops = $.csv.toArrays(data);
     m_stop_names = _.map(m_stops, function (row) { return row[1]; });
+    m_stop_names.shift();
     m_stop_names.sort();
 });
 

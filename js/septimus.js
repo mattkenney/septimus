@@ -170,8 +170,29 @@ if (window.localStorage && window.JSON)
 
 function findRoute()
 {
-    m_from = $("#stopfrom input").val();
-    m_to = $("#stopto input").val();
+    var fromText = $("#stopfrom input").val()
+    ,   toText = $("#stopto input").val()
+    ;
+    if (!fromText || !toText)
+    {
+        alert("First choose both a from station and a to station.");
+        return;
+    }
+    var from = matchNames(fromText)[0];
+    if (!from)
+    {
+        alert('"' + fromText + '" is not a SEPTA station.');
+        return;
+    }
+    var to = matchNames(toText)[0];
+    if (!to)
+    {
+        alert('"' + fromText + '" is not a SEPTA station.');
+        return;
+    }
+
+    m_from = from;
+    m_to = to;
     $.mobile.changePage("#routes");
 }
 
@@ -313,6 +334,15 @@ function makeTime(scheduled, delay)
     return $span;
 }
 
+function matchNames(str)
+{
+    var strLower = str && str.toLowerCase();
+    return _.filter(m_stop_names, function (value)
+    {
+        return (strLower === value.substring(0, strLower.length).toLowerCase());
+    });
+}
+
 function parseTime(str)
 {
     if ((/^\s*([0-9]+):([0-9]+)\s*(AM|PM)\s*$/i).test(str))
@@ -343,8 +373,6 @@ function updateRecent()
     var $list = $("#recent ul")
     ,   recent = _.sortBy(m_recent, "label");
     ;
-    $("#stopfrom input").val("");
-    $("#stopto input").val("");
     $list.empty();
     for (var i = 0; i < recent.length; i++)
     {
@@ -380,10 +408,7 @@ $(document).on("pageinit", "#search", function()
         $list.empty();
         if (m_stop_names && text)
         {
-            var matches = _.filter(m_stop_names, function (value)
-            {
-                return (text === value.substring(0, text.length).toLowerCase());
-            });
+            var matches = matchNames(text);
             for (var i = 0; i < matches.length; i++)
             {
                 $("<li></li>")
@@ -397,7 +422,17 @@ $(document).on("pageinit", "#search", function()
         $list.trigger("updatelayout");
     });
 
-    $("#search").on("pagebeforeshow", updateRecent);
+    $("#search").on("pagebeforeshow", function ()
+    {
+        $("#stopfrom input").val("");
+        $("#stopto input").val("");
+        $("#stopfrom ul,#stopto ul")
+            .empty()
+            .listview("refresh")
+            .trigger("updatelayout")
+            ;
+        updateRecent();
+    });
     $("#search form").on("submit", findRoute);
     $("#find").click(findRoute);
 });
@@ -406,6 +441,7 @@ $(document).on("pageinit", "#routes", function()
 {
     function load(data)
     {
+        $.mobile.loading("hide");
         var $list = $("#routes-list");
         $list.empty();
         if (!data || !data.length)
@@ -469,22 +505,39 @@ $(document).on("pageinit", "#routes", function()
         if (m_from && m_to)
         {
             $.mobile.loading("show");
+            var param = $.param({ req1: m_from, req2: m_to });
+            if (window._gaq)
+            {
+                _gaq.push(["_trackEvent", "API", "NextToArrive", param]);
+            }
             $.ajax("http://www3.septa.org/hackathon/NextToArrive/",
             {
-                data: $.param({ req1: m_from, req2: m_to }),
+                data: param,
                 dataType: "jsonp",
-                complete: function ()
+                error: function ()
                 {
                     $.mobile.loading("hide");
+                    alert("There was a problem contacting SEPTA.");
                 },
                 success: load
             });
         }
         else
         {
-            $.mobile.changePage("#search");
+            setTimeout(function ()
+            {
+                $.mobile.changePage("#search");
+            },0);
         }
     });
+});
+
+$(document).on("pageshow", function ()
+{
+    if (window._gaq && $.mobile.activePage && $.mobile.activePage[0])
+    {
+        _gaq.push(["_trackEvent", "UI", "pageshow", $.mobile.activePage[0].id]);
+    }
 });
 
 })();

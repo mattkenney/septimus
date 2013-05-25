@@ -175,7 +175,7 @@ function findRoute()
     ;
     if (!fromText || !toText)
     {
-        alert("First choose both a from station and a to station.");
+        alert('First choose both a "from" station and a "to" station.');
         return;
     }
     var from = matchNames(fromText)[0];
@@ -187,7 +187,7 @@ function findRoute()
     var to = matchNames(toText)[0];
     if (!to)
     {
-        alert('"' + fromText + '" is not a SEPTA station.');
+        alert('"' + toText + '" is not a SEPTA station.');
         return;
     }
 

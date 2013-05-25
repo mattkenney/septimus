@@ -1,34 +1,197 @@
 (function(){
 
-var m_stops
-,   m_stop_names
-,   m_recent = {}
-;
-
-$.get("/gtfa_public/google_rail/stops.txt", function (data)
-{
-    m_stops = $.csv.toArrays(data);
-    m_stop_names = _.map(m_stops, function (row) { return row[1]; });
-    m_stop_names.shift();
-    m_stop_names.sort();
-});
+var m_stop_names =
+    [
+        "30th Street Station",
+        "49th St",
+        "Airport Terminal A",
+        "Airport Terminal B",
+        "Airport Terminal C-D",
+        "Airport Terminal E-F",
+        "Allegheny",
+        "Allen Lane",
+        "Ambler",
+        "Angora",
+        "Ardmore",
+        "Ardsley",
+        "Bala",
+        "Berwyn",
+        "Bethayres",
+        "Bridesburg",
+        "Bristol",
+        "Bryn Mawr",
+        "Carpenter",
+        "Chalfont",
+        "Chelten Avenue",
+        "Cheltenham",
+        "Chester TC",
+        "Chestnut Hill East",
+        "Chestnut Hill West",
+        "Churchmans Crossing",
+        "Claymont",
+        "Clifton-Aldan",
+        "Colmar",
+        "Conshohocken",
+        "Cornwells Heights",
+        "Crestmont",
+        "Croydon",
+        "Crum Lynne",
+        "Curtis Park",
+        "Cynwyd",
+        "Darby",
+        "Daylesford",
+        "Delaware Valley College",
+        "Devon",
+        "Downingtown",
+        "Doylestown",
+        "East Falls",
+        "Eastwick Station",
+        "Eddington",
+        "Eddystone",
+        "Elkins Park",
+        "Elm St",
+        "Elwyn Station",
+        "Exton",
+        "Fern Rock TC",
+        "Fernwood",
+        "Folcroft",
+        "Forest Hills",
+        "Ft Washington",
+        "Fortuna",
+        "Fox Chase",
+        "Germantown",
+        "Gladstone",
+        "Glenolden",
+        "Glenside",
+        "Gravers",
+        "Gwynedd Valley",
+        "Hatboro",
+        "Haverford",
+        "Highland",
+        "Highland Ave",
+        "Holmesburg Jct",
+        "Ivy Ridge",
+        "Jenkintown-Wyncote",
+        "Langhorne",
+        "Lansdale",
+        "Lansdowne",
+        "Lawndale",
+        "Levittown",
+        "Link Belt",
+        "Main St",
+        "Malvern",
+        "Manayunk",
+        "Marcus Hook",
+        "Market East",
+        "Meadowbrook",
+        "Media",
+        "Melrose Park",
+        "Merion",
+        "Miquon",
+        "Morton",
+        "Mt Airy",
+        "Moylan-Rose Valley",
+        "Narberth",
+        "Neshaminy Falls",
+        "New Britain",
+        "Newark",
+        "Noble",
+        "Norristown TC",
+        "North Broad St",
+        "North Hills",
+        "North Philadelphia",
+        "North Wales",
+        "Norwood",
+        "Olney",
+        "Oreland",
+        "Overbrook",
+        "Paoli",
+        "Penllyn",
+        "Pennbrook",
+        "Philmont",
+        "Primos",
+        "Prospect Park",
+        "Queen Lane",
+        "Radnor",
+        "Ridley Park",
+        "Rosemont",
+        "Roslyn",
+        "Rydal",
+        "Ryers",
+        "Secane",
+        "Sedgwick",
+        "Sharon Hill",
+        "Somerton",
+        "Spring Mill",
+        "St. Davids",
+        "St. Martins",
+        "Stenton",
+        "Strafford",
+        "Suburban Station",
+        "Swarthmore",
+        "Tacony",
+        "Temple U",
+        "Thorndale",
+        "Torresdale",
+        "Trenton",
+        "Trevose",
+        "Tulpehocken",
+        "University City",
+        "Upsal",
+        "Villanova",
+        "Wallingford",
+        "Warminster",
+        "Washington Lane",
+        "Wayne Station",
+        "Wayne Jct",
+        "West Trenton",
+        "Whitford",
+        "Willow Grove",
+        "Wilmington",
+        "Wissahickon",
+        "Wister",
+        "Woodbourne",
+        "Wyndmoor",
+        "Wynnefield Avenue",
+        "Wynnewood",
+        "Yardley"
+    ]
+    ,   m_recent = {}
+    ,   m_from = ""
+    ,   m_to = ""
+    ;
 
 if (window.localStorage && window.JSON)
 {
     m_recent = JSON.parse(localStorage.getItem("recent") || "[]");
+    m_from = localStorage.getItem("from") || "";
+    m_to = localStorage.getItem("to") || "";
 }
 
 function findRoute()
 {
-    var from = $("#stopfrom input").val()
-    ,   to = $("#stopto input").val()
-    ;
-    $.ajax("http://www3.septa.org/hackathon/NextToArrive/",
+    m_from = $("#stopfrom input").val();
+    m_to = $("#stopto input").val();
+    $.mobile.changePage("#routes");
+}
+
+function formatTime(time)
+{
+    if (time && time.getHours)
     {
-        data: $.param({ req1: from, req2: to }),
-        dataType: "jsonp",
-        success: makeRouteLoad(from, to)
-    });
+        var hours = time.getHours()
+        ,   minutes = time.getMinutes()
+        ,   ampm = "AM"
+        ,   result
+        ;
+        if (hours > 12)
+        {
+            hours -= 12;
+            ampm = "PM";
+        }
+        result = hours + ":" + String(100 + minutes).substring(1) + ampm;
+    }
+    return result;
 }
 
 function makeRecentDeleteListener(recent)
@@ -44,18 +207,18 @@ function makeRecentDeleteListener(recent)
     };
 }
 
-function makeDetailListener(line, train)
-{
-    return function ()
-    {
-        $.ajax("http://www3.septa.org/hackathon/RRSchedules/",
-        {
-            data: $.param({ req1: train }),
-            dataType: "jsonp",
-            success: makeShowTrain(line, train)
-        });
-    };
-}
+//function makeDetailListener(line, train)
+//{
+//    return function ()
+//    {
+//        $.ajax("http://www3.septa.org/hackathon/RRSchedules/",
+//        {
+//            data: $.param({ req1: train }),
+//            dataType: "jsonp",
+//            success: makeShowTrain(line, train)
+//        });
+//    };
+//}
 
 function makeRecentListener(recent)
 {
@@ -67,147 +230,52 @@ function makeRecentListener(recent)
     };
 }
 
-function makeRouteLoad(from, to)
+function makeRouteItem($list, from, to, data, phase)
 {
-    return function (data)
-    {
-        var $list = $("#routes-list");
-        $list.empty();
-        if (data.length)
-        {
-            $.mobile.changePage("#routes");
-        }
-        else
-        {
-            alert("No route found?!");
-            return;
-        }
-        for (var i = 0; i < data.length; i++)
-        {
-            var $head = $("<li></li>")
-                .jqmData("role", "list-divider")
-                .jqmData("theme", "c")
-                .text(data[i].orig_departure_time + " - " + (data[i].term_arrival_time || data[i].orig_arrival_time))
-                .appendTo($list)
-                ;
-            var $item = $("<li></li>")
-                .jqmData("theme", "c")
-                .appendTo($list)
-                ;
-            $link = $item;
+    var $item = $("<li></li>").appendTo($list).jqmData("theme", "c")
+    ,   train = data[phase + "_line"] + " " + data[phase + "_train"]
+    ,   depart = data[phase + "_departure_time"] || data[phase + "_depart_time"]
+    ,   arrive = data[phase + "_arrival_time"]
+    ,   delay = data[phase + "_delay"]
+    ;
+    var $link = $item;
 //            var $link = $("<a></a>")
 //                .attr("href", "javascript:void(0)")
-//                .click(makeDetailListener(data[i].orig_line, data[i].orig_train))
+//                .click(makeDetailListener(data[phase + "_line"], data[phase + "_train"]))
 //                .appendTo($item)
 //                ;
-            $("<div></div>")
-                .addClass("ui-li-desc")
-                .text(data[i].orig_line + " " + data[i].orig_train)
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("Depart " + data[i].orig_departure_time + " (" + data[i].orig_delay + ")")
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("> " + from)
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("Arrive " + data[i].orig_arrival_time)
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("> " + (data[i].Connection || to))
-                .appendTo($link)
-                ;
-            if (data[i].isdirect === "true")
-            {
-                continue;
-            }
-            $("<span></span>")
-                .text(" - 1 connection")
-                .appendTo($head)
-                ;
-            $item = $("<li></li>")
-                .jqmData("theme", "c")
-                .appendTo($list)
-                ;
-            $link = $item;
-//            $link = $("<a></a>")
-//                .attr("href", "javascript:void(0)")
-//                .click(makeDetailListener(data[i].term_line, data[i].term_train))
-//                .appendTo($item)
+    $("<div></div>").appendTo($link).text(train).addClass("ui-li-desc");
+    $("<div></div>").appendTo($link).text("Depart ").append(makeTime(depart, delay));
+    $("<div></div>").appendTo($link).text("@ " + from);
+    $("<div></div>").appendTo($link).text("Arrive ").append(makeTime(arrive, delay));
+    $("<div></div>").appendTo($link).text("@ " + to);
+}
+
+//function makeShowTrain(line, train)
+//{
+//    return function (data)
+//    {
+//        var $list = $("#detail-list");
+//        $list.empty();
+//        $.mobile.changePage("#detail");
+//        $("<li></li>")
+//            .jqmData("role", "list-divider")
+//            .jqmData("theme", "c")
+//            .text(line + " " + train)
+//            .appendTo($list)
+//            ;
+//        for (var i = 0; i < data.length; i++)
+//        {
+//            $("<li></li>")
+//                .jqmData("theme", "c")
+//                .text(data[i].sched_tm + " " + data[i].station)
+//                .appendTo($list)
 //                ;
-            $("<div></div>")
-                .addClass("ui-li-desc")
-                .text(data[i].term_line + " " + data[i].term_train)
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("Depart " + data[i].term_depart_time + " (" + data[i].term_delay + ")")
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("> " + data[i].Connection)
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("Arrive " + data[i].term_arrival_time)
-                .appendTo($link)
-                ;
-            $("<div></div>")
-                .text("> " + to)
-                .appendTo($link)
-                ;
-        }
-        $list.listview("refresh");
-        $list.trigger("updatelayout");
-
-        var recent =
-            {
-                from: from,
-                to: to,
-                label: from + " - " + to
-            };
-        m_recent = _.filter(m_recent, function (value) { return (value.label !== recent.label) });
-        m_recent.push(recent);
-        while (m_recent.length > 10)
-        {
-            m_recent.shift();
-        }
-        if (window.localStorage && window.JSON)
-        {
-            localStorage.setItem("recent", JSON.stringify(m_recent));
-        }
-    };
-}
-
-function makeShowTrain(line, train)
-{
-    return function (data)
-    {
-        var $list = $("#detail-list");
-        $list.empty();
-        $.mobile.changePage("#detail");
-        $("<li></li>")
-            .jqmData("role", "list-divider")
-            .jqmData("theme", "c")
-            .text(line + " " + train)
-            .appendTo($list)
-            ;
-        for (var i = 0; i < data.length; i++)
-        {
-            $("<li></li>")
-                .jqmData("theme", "c")
-                .text(data[i].sched_tm + " " + data[i].station)
-                .appendTo($list)
-                ;
-        }
-        $list.listview("refresh");
-        $list.trigger("updatelayout");
-    };
-}
+//        }
+//        $list.listview("refresh");
+//        $list.trigger("updatelayout");
+//    };
+//}
 
 function makeStopListener($input, $list, text)
 {
@@ -220,11 +288,63 @@ function makeStopListener($input, $list, text)
     };
 }
 
+function makeTime(scheduled, delay)
+{
+    var $span = $("<span></span>");
+    if ((/^([0-9]+) mins$/).test(delay))
+    {
+        var delta = 0|RegExp.$1
+        ,   estimated = parseTime(scheduled)
+        ;
+        if (estimated)
+        {
+            estimated.setTime(estimated.getTime() + delta * 60000);
+        }
+        estimated = formatTime(estimated);
+        $("<strike></strike>").appendTo($span).text(scheduled);
+        $span.append(" ");
+        $("<i></i>").appendTo($span).text(estimated);
+    }
+    else
+    {
+        $("<span></span>").appendTo($span).text(scheduled);
+        $("<span></span>").appendTo($span).text(" (" + delay + ")");
+    }
+    return $span;
+}
+
+function parseTime(str)
+{
+    if ((/^\s*([0-9]+):([0-9]+)\s*(AM|PM)\s*$/i).test(str))
+    {
+        var hours = 0|RegExp.$1
+        ,   minutes = 0|RegExp.$2
+        ,   ampm = RegExp.$3.toUpperCase()
+        ,   now = new Date()
+        ;
+        if (hours === 12)
+        {
+            hours = 0;
+        }
+        if (ampm === "PM")
+        {
+            hours += 12;
+        }
+        now.setHours(hours);
+        now.setMinutes(minutes);
+        now.setSeconds(0);
+        now.setMilliseconds(0);
+    }
+    return now;
+}
+
 function updateRecent()
 {
     var $list = $("#recent ul")
     ,   recent = _.sortBy(m_recent, "label");
     ;
+    $("#stopfrom input").val("");
+    $("#stopto input").val("");
     $list.empty();
     for (var i = 0; i < recent.length; i++)
     {
@@ -280,6 +400,91 @@ $(document).on("pageinit", "#search", function()
     $("#search").on("pagebeforeshow", updateRecent);
     $("#search form").on("submit", findRoute);
     $("#find").click(findRoute);
+});
+
+$(document).on("pageinit", "#routes", function()
+{
+    function load(data)
+    {
+        var $list = $("#routes-list");
+        $list.empty();
+        if (!data || !data.length)
+        {
+            alert("No route found?!");
+            return;
+        }
+        for (var i = 0; i < data.length; i++)
+        {
+            var $head = $("<li></li>")
+                .jqmData("role", "list-divider")
+                .jqmData("theme", "c")
+                .text(data[i].orig_departure_time + " - " + (data[i].term_arrival_time || data[i].orig_arrival_time))
+                .appendTo($list)
+                ;
+            makeRouteItem($list, m_from, data[i].Connection || m_to, data[i], "orig");
+            if (data[i].isdirect === "true")
+            {
+                continue;
+            }
+            $("<span></span>")
+                .text(" - 1 connection")
+                .appendTo($head)
+                ;
+            makeRouteItem($list, data[i].Connection, m_to, data[i], "term");
+        }
+        $list.listview("refresh");
+        $list.trigger("updatelayout");
+
+        var recent =
+            {
+                from: m_from,
+                to: m_to,
+                label: m_from + " - " + m_to
+            };
+        m_recent = _.filter(m_recent, function (value) { return (value.label !== recent.label) });
+        m_recent.push(recent);
+        while (m_recent.length > 10)
+        {
+            m_recent.shift();
+        }
+        if (window.localStorage && window.JSON)
+        {
+            localStorage.setItem("recent", JSON.stringify(m_recent));
+            localStorage.setItem("from", m_from);
+            localStorage.setItem("to", m_to);
+        }
+    };
+
+    $("#routes").on("pagebeforeshow", function ()
+    {
+        $("#routes-list")
+            .empty()
+            .listview("refresh")
+            .trigger("updatelayout")
+            ;
+    });
+
+    $("#routes").on("pageshow", function ()
+    {
+        if (m_from && m_to)
+        {
+            $.mobile.loading("show");
+            $.ajax("http://www3.septa.org/hackathon/NextToArrive/",
+            {
+                data: $.param({ req1: m_from, req2: m_to }),
+                dataType: "jsonp",
+                complete: function ()
+                {
+                    $.mobile.loading("hide");
+                },
+                success: load
+            });
+        }
+        else
+        {
+            $.mobile.changePage("#search");
+        }
+    });
 });
 
 })();

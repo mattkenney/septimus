@@ -1,171 +1,194 @@
 (function(){
 
-var m_stop_names =
-    [
-        "30th Street Station",
-        "49th St",
-        "Airport Terminal A",
-        "Airport Terminal B",
-        "Airport Terminal C-D",
-        "Airport Terminal E-F",
-        "Allegheny",
-        "Allen Lane",
-        "Ambler",
-        "Angora",
-        "Ardmore",
-        "Ardsley",
-        "Bala",
-        "Berwyn",
-        "Bethayres",
-        "Bridesburg",
-        "Bristol",
-        "Bryn Mawr",
-        "Carpenter",
-        "Chalfont",
-        "Chelten Avenue",
-        "Cheltenham",
-        "Chester TC",
-        "Chestnut Hill East",
-        "Chestnut Hill West",
-        "Churchmans Crossing",
-        "Claymont",
-        "Clifton-Aldan",
-        "Colmar",
-        "Conshohocken",
-        "Cornwells Heights",
-        "Crestmont",
-        "Croydon",
-        "Crum Lynne",
-        "Curtis Park",
-        "Cynwyd",
-        "Darby",
-        "Daylesford",
-        "Delaware Valley College",
-        "Devon",
-        "Downingtown",
-        "Doylestown",
-        "East Falls",
-        "Eastwick Station",
-        "Eddington",
-        "Eddystone",
-        "Elkins Park",
-        "Elm St",
-        "Elwyn Station",
-        "Exton",
-        "Fern Rock TC",
-        "Fernwood",
-        "Folcroft",
-        "Forest Hills",
-        "Ft Washington",
-        "Fortuna",
-        "Fox Chase",
-        "Germantown",
-        "Gladstone",
-        "Glenolden",
-        "Glenside",
-        "Gravers",
-        "Gwynedd Valley",
-        "Hatboro",
-        "Haverford",
-        "Highland",
-        "Highland Ave",
-        "Holmesburg Jct",
-        "Ivy Ridge",
-        "Jenkintown-Wyncote",
-        "Langhorne",
-        "Lansdale",
-        "Lansdowne",
-        "Lawndale",
-        "Levittown",
-        "Link Belt",
-        "Main St",
-        "Malvern",
-        "Manayunk",
-        "Marcus Hook",
-        "Market East",
-        "Meadowbrook",
-        "Media",
-        "Melrose Park",
-        "Merion",
-        "Miquon",
-        "Morton",
-        "Mt Airy",
-        "Moylan-Rose Valley",
-        "Narberth",
-        "Neshaminy Falls",
-        "New Britain",
-        "Newark",
-        "Noble",
-        "Norristown TC",
-        "North Broad St",
-        "North Hills",
-        "North Philadelphia",
-        "North Wales",
-        "Norwood",
-        "Olney",
-        "Oreland",
-        "Overbrook",
-        "Paoli",
-        "Penllyn",
-        "Pennbrook",
-        "Philmont",
-        "Primos",
-        "Prospect Park",
-        "Queen Lane",
-        "Radnor",
-        "Ridley Park",
-        "Rosemont",
-        "Roslyn",
-        "Rydal",
-        "Ryers",
-        "Secane",
-        "Sedgwick",
-        "Sharon Hill",
-        "Somerton",
-        "Spring Mill",
-        "St. Davids",
-        "St. Martins",
-        "Stenton",
-        "Strafford",
-        "Suburban Station",
-        "Swarthmore",
-        "Tacony",
-        "Temple U",
-        "Thorndale",
-        "Torresdale",
-        "Trenton",
-        "Trevose",
-        "Tulpehocken",
-        "University City",
-        "Upsal",
-        "Villanova",
-        "Wallingford",
-        "Warminster",
-        "Washington Lane",
-        "Wayne Station",
-        "Wayne Jct",
-        "West Trenton",
-        "Whitford",
-        "Willow Grove",
-        "Wilmington",
-        "Wissahickon",
-        "Wister",
-        "Woodbourne",
-        "Wyndmoor",
-        "Wynnefield Avenue",
-        "Wynnewood",
-        "Yardley"
-    ]
+var m_stops =
+    {
+        "30th Street Station":{},
+        "49th St":{"r":"med"},
+        "Airport Terminal A":{"r":"air"},
+        "Airport Terminal B":{"r":"air"},
+        "Airport Terminal C-D":{"r":"air"},
+        "Airport Terminal E-F":{"r":"air"},
+        "Allegheny":{"r":"nor"},
+        "Allen Lane":{"r":"chw"},
+        "Ambler":{"r":"lan"},
+        "Angora":{"r":"med"},
+        "Ardmore":{"r":"pao"},
+        "Ardsley":{"r":"war"},
+        "Bala":{"r":"cyn"},
+        "Berwyn":{"r":"pao"},
+        "Bethayres":{"r":"wtr"},
+        "Bridesburg":{"r":"tre"},
+        "Bristol":{"r":"tre"},
+        "Bryn Mawr":{"r":"pao"},
+        "Carpenter":{"r":"chw"},
+        "Chalfont":{"r":"lan"},
+        "Chelten Avenue":{"r":"chw"},
+        "Cheltenham":{"r":"fox"},
+        "Chester TC":{"r":"wil"},
+        "Chestnut Hill East":{"r":"che"},
+        "Chestnut Hill West":{"r":"chw"},
+        "Churchmans Crossing":{"r":"wil"},
+        "Claymont":{"r":"wil"},
+        "Clifton-Aldan":{"r":"med"},
+        "Colmar":{"r":"lan"},
+        "Conshohocken":{"r":"nor"},
+        "Cornwells Heights":{"r":"tre"},
+        "Crestmont":{"r":"war"},
+        "Croydon":{"r":"tre"},
+        "Crum Lynne":{"r":"wil"},
+        "Curtis Park":{"r":"wil"},
+        "Cynwyd":{"r":"cyn"},
+        "Darby":{"r":"wil"},
+        "Daylesford":{"r":"pao"},
+        "Delaware Valley College":{"r":"lan"},
+        "Devon":{"r":"pao"},
+        "Downingtown":{"r":"pao"},
+        "Doylestown":{"r":"lan"},
+        "East Falls":{"r":"nor"},
+        "Eastwick Station":{"r":"air"},
+        "Eddington":{"r":"tre"},
+        "Eddystone":{"r":"wil"},
+        "Elkins Park":{},
+        "Elm St":{"r":"nor"},
+        "Elwyn Station":{"r":"med"},
+        "Exton":{"r":"pao"},
+        "Fern Rock TC":{},
+        "Fernwood":{"r":"med"},
+        "Folcroft":{"r":"wil"},
+        "Forest Hills":{"r":"wtr"},
+        "Fortuna":{"r":"lan"},
+        "Fox Chase":{"r":"fox"},
+        "Ft Washington":{"r":"lan"},
+        "Germantown":{"r":"che"},
+        "Gladstone":{"r":"med"},
+        "Glenolden":{"r":"wil"},
+        "Glenside":{},
+        "Gravers":{"r":"che"},
+        "Gwynedd Valley":{"r":"lan"},
+        "Hatboro":{"r":"war"},
+        "Haverford":{"r":"pao"},
+        "Highland Ave":{"r":"wil"},
+        "Highland":{"r":"chw"},
+        "Holmesburg Jct":{"r":"tre"},
+        "Ivy Ridge":{"r":"nor"},
+        "Jenkintown-Wyncote":{},
+        "Langhorne":{"r":"wtr"},
+        "Lansdale":{"r":"lan"},
+        "Lansdowne":{"r":"med"},
+        "Lawndale":{"r":"fox"},
+        "Levittown":{"r":"tre"},
+        "Link Belt":{"r":"lan"},
+        "Main St":{"r":"nor"},
+        "Malvern":{"r":"pao"},
+        "Manayunk":{"r":"nor"},
+        "Marcus Hook":{"r":"wil"},
+        "Market East":{},
+        "Meadowbrook":{"r":"wtr"},
+        "Media":{"r":"med"},
+        "Melrose Park":{},
+        "Merion":{"r":"pao"},
+        "Miquon":{"r":"nor"},
+        "Morton":{"r":"med"},
+        "Moylan-Rose Valley":{"r":"med"},
+        "Mt Airy":{"r":"che"},
+        "Narberth":{"r":"pao"},
+        "Neshaminy Falls":{"r":"wtr"},
+        "New Britain":{"r":"lan"},
+        "Newark":{"r":"wil"},
+        "Noble":{"r":"wtr"},
+        "Norristown TC":{"r":"nor"},
+        "North Broad St":{},
+        "North Hills":{"r":"lan"},
+        "North Philadelphia":{"r":"chw"},
+        "North Wales":{"r":"lan"},
+        "Norwood":{"r":"wil"},
+        "Olney":{"r":"fox"},
+        "Oreland":{"r":"lan"},
+        "Overbrook":{"r":"pao"},
+        "Paoli":{"r":"pao"},
+        "Penllyn":{"r":"lan"},
+        "Pennbrook":{"r":"lan"},
+        "Philmont":{"r":"wtr"},
+        "Primos":{"r":"med"},
+        "Prospect Park":{"r":"wil"},
+        "Queen Lane":{"r":"chw"},
+        "Radnor":{"r":"pao"},
+        "Ridley Park":{"r":"wil"},
+        "Rosemont":{"r":"pao"},
+        "Roslyn":{"r":"war"},
+        "Rydal":{"r":"wtr"},
+        "Ryers":{"r":"fox"},
+        "Secane":{"r":"med"},
+        "Sedgwick":{"r":"che"},
+        "Sharon Hill":{"r":"wil"},
+        "Somerton":{"r":"wtr"},
+        "Spring Mill":{"r":"nor"},
+        "St. Davids":{"r":"pao"},
+        "St. Martins":{"r":"chw"},
+        "Stenton":{"r":"che"},
+        "Strafford":{"r":"pao"},
+        "Suburban Station":{},
+        "Swarthmore":{"r":"med"},
+        "Tacony":{"r":"tre"},
+        "Temple U":{},
+        "Thorndale":{"r":"pao"},
+        "Torresdale":{"r":"tre"},
+        "Trenton":{"r":"tre"},
+        "Trevose":{"r":"wtr"},
+        "Tulpehocken":{"r":"chw"},
+        "University City":{},
+        "Upsal":{"r":"chw"},
+        "Villanova":{"r":"pao"},
+        "Wallingford":{"r":"med"},
+        "Warminster":{"r":"war"},
+        "Washington Lane":{"r":"che"},
+        "Wayne Jct":{},
+        "Wayne-A":{"r":"pao","alt":"Wayne Station"},
+        "West Trenton":{"r":"wtr"},
+        "Whitford":{"r":"pao"},
+        "Willow Grove":{"r":"war"},
+        "Wilmington":{"r":"wil"},
+        "Wissahickon":{"r":"nor"},
+        "Wister":{"r":"che"},
+        "Woodbourne":{"r":"wtr"},
+        "Wyndmoor":{"r":"che"},
+        "Wynnefield Avenue":{"r":"cyn"},
+        "Wynnewood":{"r":"pao"},
+        "Yardley":{"r":"wtr"}
+    }
+    ,   m_routes =
+    {
+        "air":"Airport",
+        "che":"Chestnut Hill East",
+        "chw":"Chestnut Hill West",
+        "cyn":"Cynwyd",
+        "fox":"Fox Chase",
+        "lan":"Lansdale/Doylestown",
+        "med":"Media/Elwyn",
+        "nor":"Manayunk/Norristown",
+        "pao":"Paoli/Thorndale",
+        "tre":"Trenton",
+        "war":"Warminster",
+        "wil":"Wilmington/Newark",
+        "wtr":"West Trenton"
+    }
+    ,   m_stop_names = _.map(m_stops, function (value, key) { return (value.alt || key); })
     ,   m_recent = {}
     ,   m_from = ""
     ,   m_to = ""
+    ,   m_train = ""
+    ,   m_connection = ""
     ;
+
+m_stop_names.sort();
 
 if (window.localStorage && window.JSON)
 {
     m_recent = JSON.parse(localStorage.getItem("recent") || "[]");
     m_from = localStorage.getItem("from") || "";
     m_to = localStorage.getItem("to") || "";
+    m_train = localStorage.getItem("train") || "";
+    m_connection = localStorage.getItem("connection") || "";
 }
 
 function findRoute()
@@ -193,15 +216,21 @@ function findRoute()
 
     m_from = from;
     m_to = to;
+    $("#routes-list") .empty();
     $.mobile.changePage("#routes");
 }
 
 function formatTime(time)
 {
-    if (time && time.getHours)
+    var result = time;
+    if (result && !result.getHours)
     {
-        var hours = time.getHours()
-        ,   minutes = time.getMinutes()
+        result = parseTime(time) || time;
+    }
+    if (result && result.getHours)
+    {
+        var hours = result.getHours()
+        ,   minutes = result.getMinutes()
         ,   ampm = "AM"
         ,   result
         ;
@@ -210,9 +239,24 @@ function formatTime(time)
             hours -= 12;
             ampm = "PM";
         }
-        result = hours + ":" + String(100 + minutes).substring(1) + ampm;
+        else if (hours === 0)
+        {
+            hours = 12;
+        }
+        result = hours + ":" + String(100 + minutes).substring(1) + " " + ampm;
     }
     return result;
+}
+
+function makeDetailListener(train, connection)
+{
+    return function ()
+    {
+        m_train = train;
+        m_connection = connection;
+        $("#detail-list") .empty();
+        $.mobile.changePage("#detail");
+    };
 }
 
 function makeRecentDeleteListener(recent)
@@ -227,19 +271,6 @@ function makeRecentDeleteListener(recent)
         updateRecent();
     };
 }
-
-//function makeDetailListener(line, train)
-//{
-//    return function ()
-//    {
-//        $.ajax("http://www3.septa.org/hackathon/RRSchedules/",
-//        {
-//            data: $.param({ req1: train }),
-//            dataType: "jsonp",
-//            success: makeShowTrain(line, train)
-//        });
-//    };
-//}
 
 function makeRecentListener(recent)
 {
@@ -259,44 +290,19 @@ function makeRouteItem($list, from, to, data, phase)
     ,   arrive = data[phase + "_arrival_time"]
     ,   delay = data[phase + "_delay"]
     ;
-    var $link = $item;
-//            var $link = $("<a></a>")
-//                .attr("href", "javascript:void(0)")
-//                .click(makeDetailListener(data[phase + "_line"], data[phase + "_train"]))
-//                .appendTo($item)
-//                ;
+
+    var $link = $("<a></a>")
+        .attr("href", "javascript:void(0)")
+        .click(makeDetailListener(data[phase + "_train"], data.Connection))
+        .appendTo($item)
+        ;
+
     $("<div></div>").appendTo($link).text(train).addClass("ui-li-desc");
     $("<div></div>").appendTo($link).text("Depart ").append(makeTime(depart, delay));
     $("<div></div>").appendTo($link).text("@ " + from);
     $("<div></div>").appendTo($link).text("Arrive ").append(makeTime(arrive, delay));
     $("<div></div>").appendTo($link).text("@ " + to);
 }
-
-//function makeShowTrain(line, train)
-//{
-//    return function (data)
-//    {
-//        var $list = $("#detail-list");
-//        $list.empty();
-//        $.mobile.changePage("#detail");
-//        $("<li></li>")
-//            .jqmData("role", "list-divider")
-//            .jqmData("theme", "c")
-//            .text(line + " " + train)
-//            .appendTo($list)
-//            ;
-//        for (var i = 0; i < data.length; i++)
-//        {
-//            $("<li></li>")
-//                .jqmData("theme", "c")
-//                .text(data[i].sched_tm + " " + data[i].station)
-//                .appendTo($list)
-//                ;
-//        }
-//        $list.listview("refresh");
-//        $list.trigger("updatelayout");
-//    };
-//}
 
 function makeStopListener($input, $list, text)
 {
@@ -328,7 +334,7 @@ function makeTime(scheduled, delay)
     }
     else
     {
-        $("<span></span>").appendTo($span).text(scheduled);
+        $("<span></span>").appendTo($span).text(formatTime(scheduled));
         $("<span></span>").appendTo($span).text(" (" + delay + ")");
     }
     return $span;
@@ -345,11 +351,12 @@ function matchNames(str)
 
 function parseTime(str)
 {
-    if ((/^\s*([0-9]+):([0-9]+)\s*(AM|PM)\s*$/i).test(str))
+    if ((/^\s*([0-9]+):([0-9]+)((:([0-9]+))|(\s*(AM|PM)))\s*$/i).test(str))
     {
         var hours = 0|RegExp.$1
         ,   minutes = 0|RegExp.$2
-        ,   ampm = RegExp.$3.toUpperCase()
+        ,   seconds = 0|RegExp.$4
+        ,   ampm = RegExp.$7.toUpperCase()
         ,   now = new Date()
         ;
         if (hours === 12)
@@ -362,7 +369,7 @@ function parseTime(str)
         }
         now.setHours(hours);
         now.setMinutes(minutes);
-        now.setSeconds(0);
+        now.setSeconds(seconds);
         now.setMilliseconds(0);
     }
     return now;
@@ -454,7 +461,7 @@ $(document).on("pageinit", "#routes", function()
             var $head = $("<li></li>")
                 .jqmData("role", "list-divider")
                 .jqmData("theme", "c")
-                .text(data[i].orig_departure_time + " - " + (data[i].term_arrival_time || data[i].orig_arrival_time))
+                .text(formatTime(data[i].orig_departure_time) + " - " + formatTime(data[i].term_arrival_time || data[i].orig_arrival_time))
                 .appendTo($list)
                 ;
             makeRouteItem($list, m_from, data[i].Connection || m_to, data[i], "orig");
@@ -494,7 +501,6 @@ $(document).on("pageinit", "#routes", function()
     $("#routes").on("pagebeforeshow", function ()
     {
         $("#routes-list")
-            .empty()
             .listview("refresh")
             .trigger("updatelayout")
             ;
@@ -502,7 +508,11 @@ $(document).on("pageinit", "#routes", function()
 
     $("#routes").on("pageshow", function ()
     {
-        if (m_from && m_to)
+        if ($("#routes-list li").length)
+        {
+            // leave it
+        }
+        else if (m_from && m_to)
         {
             $.mobile.loading("show");
             var param = $.param({ req1: m_from, req2: m_to });
@@ -527,6 +537,127 @@ $(document).on("pageinit", "#routes", function()
             setTimeout(function ()
             {
                 $.mobile.changePage("#search");
+            },0);
+        }
+    });
+});
+
+$(document).on("pageinit", "#detail", function()
+{
+    function load(data)
+    {
+        $.mobile.loading("hide");
+        var $list = $("#detail-list");
+        $list.empty();
+        if (!data || !data.length)
+        {
+            alert("No train found?!");
+            return;
+        }
+        var line = "-";
+        for (var i = 0; i < data.length; i++)
+        {
+            if (!data[i] || !m_stops[data[i].station])
+            {
+                continue;
+            }
+            for (var j = i; j < data.length; j++)
+            {
+                if (!data[j] || !m_stops[data[j].station] || !m_stops[data[j].station].r)
+                {
+                    continue;
+                }
+                var newLine = m_stops[data[j].station].r;
+                if (line === newLine)
+                {
+                    break;
+                }
+                line = newLine;
+                var $head = $("<li></li>")
+                    .jqmData("role", "list-divider")
+                    .jqmData("theme", "c")
+                    .text(m_routes[newLine] + " " + m_train)
+                    .appendTo($list)
+                    ;
+                 break;
+            }
+            var $item = $("<li></li>").appendTo($list).jqmData("theme", "c");
+            if (data[i].station === m_from || data[i].station === m_to || data[i].station === m_connection)
+            {
+                $item
+                    .jqmData("role", "list-divider")
+                    .jqmData("theme", "a")
+                    ;
+            }
+            var $div = $("<div></div>").appendTo($item);
+            if (data[i].sched_tm === data[i].act_tm || data[i].sched_tm === data[i].est_tm)
+            {
+                $div.text(formatTime(data[i].sched_tm));
+            }
+            else
+            {
+                $("<strike></strike>").appendTo($div).text(formatTime(data[i].sched_tm));
+                $div.append(" ");
+                var t = parseTime(data[i].act_tm);
+                if (t)
+                {
+                    $div.append(formatTime(t));
+                }
+                else
+                {
+                    $("<i></i>").appendTo($div).text(formatTime(data[i].est_tm));
+                }
+            }
+            $("<div></div>").appendTo($item).text("@ " + (m_stops[data[i].station].alt || data[i].station));
+        }
+        $list.listview("refresh");
+        $list.trigger("updatelayout");
+
+        if (window.localStorage && window.JSON)
+        {
+            localStorage.setItem("train", m_train);
+        }
+    };
+
+    $("#detail").on("pagebeforeshow", function ()
+    {
+        $("#detail-list")
+            .listview("refresh")
+            .trigger("updatelayout")
+            ;
+    });
+
+    $("#detail").on("pageshow", function ()
+    {
+        if ($("#detail-list li").length)
+        {
+            // leave it
+        }
+        else if (m_train)
+        {
+            $.mobile.loading("show");
+            var param = $.param({ req1: m_train });
+            if (window._gaq)
+            {
+                _gaq.push(["_trackEvent", "API", "RRSchedules", param]);
+            }
+            $.ajax("http://www3.septa.org/hackathon/RRSchedules/",
+            {
+                data: param,
+                dataType: "jsonp",
+                error: function ()
+                {
+                    $.mobile.loading("hide");
+                    alert("There was a problem contacting SEPTA.");
+                },
+                success: load
+            });
+        }
+        else
+        {
+            setTimeout(function ()
+            {
+                $.mobile.changePage("#routes");
             },0);
         }
     });

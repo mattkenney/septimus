@@ -223,27 +223,13 @@ function findRoute()
 function formatTime(time)
 {
     var result = time;
-    if (result && !result.getHours)
+    if (!moment.isMoment(result))
     {
         result = parseTime(time) || time;
     }
-    if (result && result.getHours)
+    if (moment.isMoment(result))
     {
-        var hours = result.getHours()
-        ,   minutes = result.getMinutes()
-        ,   ampm = "AM"
-        ,   result
-        ;
-        if (hours > 12)
-        {
-            hours -= 12;
-            ampm = "PM";
-        }
-        else if (hours === 0)
-        {
-            hours = 12;
-        }
-        result = hours + ":" + String(100 + minutes).substring(1) + " " + ampm;
+        result = result.format("h:mm A");
     }
     return result;
 }
@@ -323,9 +309,9 @@ function makeTime(scheduled, delay)
         var delta = 0|RegExp.$1
         ,   estimated = parseTime(scheduled)
         ;
-        if (estimated)
+        if (moment.isMoment(estimated))
         {
-            estimated.setTime(estimated.getTime() + delta * 60000);
+            estimated.add("m", delta);
         }
         estimated = formatTime(estimated);
         $("<strike></strike>").appendTo($span).text(scheduled);
@@ -351,28 +337,8 @@ function matchNames(str)
 
 function parseTime(str)
 {
-    if ((/^\s*([0-9]+):([0-9]+)((:([0-9]+))|(\s*(AM|PM)))\s*$/i).test(str))
-    {
-        var hours = 0|RegExp.$1
-        ,   minutes = 0|RegExp.$2
-        ,   seconds = 0|RegExp.$4
-        ,   ampm = RegExp.$7.toUpperCase()
-        ,   now = new Date()
-        ;
-        if (hours === 12)
-        {
-            hours = 0;
-        }
-        if (ampm === "PM")
-        {
-            hours += 12;
-        }
-        now.setHours(hours);
-        now.setMinutes(minutes);
-        now.setSeconds(seconds);
-        now.setMilliseconds(0);
-    }
-    return now;
+    var result = moment("20000101 " + str, "YYYYMMDDhh:mma");
+    return (result.isValid() ? result : undefined);
 }
 
 function updateRecent()

@@ -1,0 +1,10 @@
+{
+  "name": "septimus",
+  "version": "0.0.0",
+  "devDependencies": {
+    "grunt-cli": "~0.1.9",
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-aws-s3": "~0.3.0"
+  }
+}

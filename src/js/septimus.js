@@ -22,9 +22,12 @@
 
 (function(){
 
+    // stops
+    //     r: route
+    //     alt: search&display name if different
 var m_stops =
     {
-        "30th Street Station":{},
+        "30th Street Station":{"r":"c"},
         "49th St":{"r":"med"},
         "Airport Terminal A":{"r":"air"},
         "Airport Terminal B":{"r":"air"},
@@ -104,7 +107,7 @@ var m_stops =
         "Malvern":{"r":"pao"},
         "Manayunk":{"r":"nor"},
         "Marcus Hook":{"r":"wil"},
-        "Market East":{},
+        "Market East":{"r":"c"},
         "Meadowbrook":{"r":"wtr"},
         "Media":{"r":"med"},
         "Melrose Park":{},
@@ -149,7 +152,7 @@ var m_stops =
         "St. Martins":{"r":"chw"},
         "Stenton":{"r":"che"},
         "Strafford":{"r":"pao"},
-        "Suburban Station":{},
+        "Suburban Station":{"r":"c"},
         "Swarthmore":{"r":"med"},
         "Tacony":{"r":"tre"},
         "Temple U":{},
@@ -178,6 +181,7 @@ var m_stops =
         "Wynnewood":{"r":"pao"},
         "Yardley":{"r":"wtr"}
     }
+    // route names
     ,   m_routes =
     {
         "air":"Airport",
@@ -204,6 +208,7 @@ var m_stops =
 
 m_stop_names.sort();
 
+// load state if localStorage and JSON are available
 if (window.localStorage && window.JSON)
 {
     m_recent = JSON.parse(localStorage.getItem("recent") || "[]");
@@ -238,7 +243,7 @@ function findRoute()
 
     m_from = from;
     m_to = to;
-    $("#routes-list") .empty();
+    $("#routes-list").empty();
     $.mobile.changePage("#routes");
 }
 
@@ -348,6 +353,7 @@ function makeTime(scheduled, delay)
     return $span;
 }
 
+// match on station name prefix
 function matchNames(str)
 {
     var strLower = str && str.toLowerCase();
@@ -428,12 +434,14 @@ $(document).on("pageinit", "#search", function()
             ;
         updateRecent();
     });
+
     $("#search form").on("submit", findRoute);
     $("#find").click(findRoute);
 });
 
 $(document).on("pageinit", "#routes", function()
 {
+    // fill the route options list
     function load(data)
     {
         $.mobile.loading("hide");
@@ -466,6 +474,7 @@ $(document).on("pageinit", "#routes", function()
         $list.listview("refresh");
         $list.trigger("updatelayout");
 
+        // remember the current from/to, and up to ten previous searches
         var recent =
             {
                 from: m_from,
@@ -488,6 +497,7 @@ $(document).on("pageinit", "#routes", function()
 
     $("#routes").on("pagebeforeshow", function ()
     {
+        // update the list in case it's been cleared
         $("#routes-list")
             .listview("refresh")
             .trigger("updatelayout")
@@ -498,7 +508,7 @@ $(document).on("pageinit", "#routes", function()
     {
         if ($("#routes-list li").length)
         {
-            // leave it
+            // already have list content, so just leave it
         }
         else if (m_from && m_to)
         {
@@ -506,6 +516,7 @@ $(document).on("pageinit", "#routes", function()
             var param = $.param({ req1: m_from, req2: m_to });
             if (window._gaq)
             {
+                // track API usage
                 _gaq.push(["_trackEvent", "API", "NextToArrive", param]);
             }
             $.ajax("http://www3.septa.org/hackathon/NextToArrive/",
@@ -522,6 +533,7 @@ $(document).on("pageinit", "#routes", function()
         }
         else
         {
+            // we don't have from/to, so go back to the search page
             setTimeout(function ()
             {
                 $.mobile.changePage("#search");
@@ -532,6 +544,7 @@ $(document).on("pageinit", "#routes", function()
 
 $(document).on("pageinit", "#detail", function()
 {
+    // fill the route detail list
     function load(data)
     {
         $.mobile.loading("hide");
@@ -549,13 +562,33 @@ $(document).on("pageinit", "#detail", function()
             {
                 continue;
             }
+            // Insert a train line list-divider when the train line changes.
+            // We may have to skip ahead in the data if the current station is
+            // used by more than one line.
+            var isPastCenterCity = false;
             for (var j = i; j < data.length; j++)
             {
-                if (!data[j] || !m_stops[data[j].station] || !m_stops[data[j].station].r)
+                if (!data[j] || !m_stops[data[j].station])
                 {
                     continue;
                 }
                 var newLine = m_stops[data[j].station].r;
+                if (!newLine)
+                {
+                    // wait until we get to a Center City station
+                    // to add the divider if the current station is used by
+                    // more than one line
+                    if (i > 0 && !isPastCenterCity)
+                    {
+                        break;
+                    }
+                    continue;
+                }
+                if (newLine === "c")
+                {
+                    isPastCenterCity = true;
+                    continue;
+                }
                 if (line === newLine)
                 {
                     break;
@@ -570,6 +603,7 @@ $(document).on("pageinit", "#detail", function()
                  break;
             }
             var $item = $("<li></li>").appendTo($list).jqmData("theme", "c");
+            // change the theme for the "from" and "to" stations
             if (data[i].station === m_from || data[i].station === m_to || data[i].station === m_connection)
             {
                 $item
@@ -577,6 +611,7 @@ $(document).on("pageinit", "#detail", function()
                     .jqmData("theme", "a")
                     ;
             }
+            // now add the station details
             var $div = $("<div></div>").appendTo($item);
             if (data[i].sched_tm === data[i].act_tm || data[i].sched_tm === data[i].est_tm)
             {
@@ -584,6 +619,7 @@ $(document).on("pageinit", "#detail", function()
             }
             else
             {
+                // not on schedule, so strike the schedule time
                 $("<strike></strike>").appendTo($div).text(formatTime(data[i].sched_tm));
                 $div.append(" ");
                 var t = parseTime(data[i].act_tm);
@@ -593,6 +629,7 @@ $(document).on("pageinit", "#detail", function()
                 }
                 else
                 {
+                    // if the time is estimated, then show it in italic
                     $("<i></i>").appendTo($div).text(formatTime(data[i].est_tm));
                 }
             }
@@ -601,6 +638,7 @@ $(document).on("pageinit", "#detail", function()
         $list.listview("refresh");
         $list.trigger("updatelayout");
 
+        // remember the last train viewed
         if (window.localStorage && window.JSON)
         {
             localStorage.setItem("train", m_train);
@@ -609,6 +647,7 @@ $(document).on("pageinit", "#detail", function()
 
     $("#detail").on("pagebeforeshow", function ()
     {
+        // update the list in case it's been cleared
         $("#detail-list")
             .listview("refresh")
             .trigger("updatelayout")
@@ -619,7 +658,7 @@ $(document).on("pageinit", "#detail", function()
     {
         if ($("#detail-list li").length)
         {
-            // leave it
+            // already have list content, so just leave it
         }
         else if (m_train)
         {
@@ -627,6 +666,7 @@ $(document).on("pageinit", "#detail", function()
             var param = $.param({ req1: m_train });
             if (window._gaq)
             {
+                // track API usage
                 _gaq.push(["_trackEvent", "API", "RRSchedules", param]);
             }
             $.ajax("http://www3.septa.org/hackathon/RRSchedules/",
@@ -643,6 +683,7 @@ $(document).on("pageinit", "#detail", function()
         }
         else
         {
+            // don't have a train so go back to route options
             setTimeout(function ()
             {
                 $.mobile.changePage("#routes");
@@ -655,6 +696,7 @@ $(document).on("pageshow", function ()
 {
     if (window._gaq && $.mobile.activePage && $.mobile.activePage[0])
     {
+        // track pageshows
         _gaq.push(["_trackEvent", "UI", "pageshow", $.mobile.activePage[0].id]);
     }
 });

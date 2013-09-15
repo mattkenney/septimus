@@ -124,7 +124,7 @@ var m_stops =
         "Norristown TC":{"r":"nor"},
         "North Broad St":{},
         "North Hills":{"r":"lan"},
-        "North Philadelphia":{"r":"chw"},
+        "North Philadelphia":{"r":"tre"},
         "North Wales":{"r":"lan"},
         "Norwood":{"r":"wil"},
         "Olney":{"r":"fox"},
@@ -565,34 +565,21 @@ $(document).on("pageinit", "#detail", function()
             // Insert a train line list-divider when the train line changes.
             // We may have to skip ahead in the data if the current station is
             // used by more than one line.
-            var isPastCenterCity = false;
             for (var j = i; j < data.length; j++)
             {
                 if (!data[j] || !m_stops[data[j].station])
                 {
                     continue;
                 }
+                if (!m_stops[data[j].station].r || m_stops[data[j].station].r === "c")
+                {
+                    continue;
+                }
                 var newLine = m_stops[data[j].station].r;
-                if (!newLine)
-                {
-                    // wait until we get to a Center City station
-                    // to add the divider if the current station is used by
-                    // more than one line
-                    if (i > 0 && !isPastCenterCity)
-                    {
-                        break;
-                    }
-                    continue;
-                }
-                if (newLine === "c")
-                {
-                    isPastCenterCity = true;
-                    continue;
-                }
-                if (line === newLine)
-                {
-                    break;
-                }
+                break;
+            }
+            if (line === "-" || (m_stops[data[i].station].r && newLine && line !== newLine))
+            {
                 line = newLine;
                 var $head = $("<li></li>")
                     .jqmData("role", "list-divider")
@@ -600,7 +587,6 @@ $(document).on("pageinit", "#detail", function()
                     .text(m_routes[newLine] + " " + m_train)
                     .appendTo($list)
                     ;
-                 break;
             }
             var $item = $("<li></li>").appendTo($list).jqmData("theme", "c");
             // change the theme for the "from" and "to" stations

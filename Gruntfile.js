@@ -2,11 +2,12 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     cssmin: {
-      combine: {
-        files: {
-          'dist/css/themes/<%= pkg.name %>.css': ['src/css/themes/*.css']
+      minify: {
+          expand: true,
+          cwd: 'src/css/themes/',
+          src: ['*.css', '!*.min.css'],
+          dest: 'dist/css/themes/'
         }
-      }
     },
     uglify: {
       options: {
@@ -30,7 +31,8 @@ module.exports = function (grunt) {
           bucket: 'www.phillytrain.com'
         },
         files: [
-          { expand: true, cwd: "src/css", src: ['**/*.css', '**/*.gif', '**/*.png'], dest: 'css' },
+          { expand: true, cwd: "dist/css", src: ['**/*.css'], dest: 'css' },
+          { expand: true, cwd: "src/css", src: ['**/*.gif', '**/*.png'], dest: 'css' },
           { expand: true, cwd: "src/ico", src: ['**/*.png'], dest: 'ico' },
           { expand: true, cwd: "dist/js", src: ['**/*.js'], dest: 'js' },
           { expand: true, cwd: "src", src: ['**/*.html', '**/*.ico'], dest: '.' }

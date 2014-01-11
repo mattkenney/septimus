@@ -452,9 +452,15 @@ $(document).on("pageinit", "#routes", function()
     {
         _.each(lines, function (value, key)
         {
+            var param = $.param({ req1: key });
+            if (window._gaq)
+            {
+                // track API usage
+                _gaq.push(["_trackEvent", "API", "Alerts", param]);
+            }
             $.ajax("http://www3.septa.org/hackathon/Alerts/get_alert_data.php",
             {
-                data: 'req1=' + encodeURIComponent(key),
+                data: param,
                 dataType: "jsonp",
                 success: loadAlerts
             });

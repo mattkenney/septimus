@@ -1,6 +1,13 @@
 module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    cssmin: {
+      combine: {
+        files: {
+          'dist/css/themes/<%= pkg.name %>.css': ['src/css/themes/*.css']
+        }
+      }
+    },
     uglify: {
       options: {
           preserveComments: "some"
@@ -32,9 +39,10 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-aws-s3');
 
-  grunt.registerTask('default', ['uglify', 'aws_s3']);
+  grunt.registerTask('default', ['uglify', 'cssmin']);
+  grunt.registerTask('deploy', ['uglify', 'cssmin', 'aws_s3']);
 };
-

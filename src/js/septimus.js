@@ -1,5 +1,5 @@
 /*!
-@copyright Copyright 2013 Matt Kenney
+@copyright Copyright 2013, 2014 Matt Kenney
 @license http://www.gnu.org/licenses/agpl.txt
 @source https://github.com/mattkenney/septimus
 */
@@ -29,86 +29,86 @@ var m_stops =
     {
         "30th Street Station":{"r":"c"},
         "49th St":{"r":"med"},
-        "Airport Terminal A":{"r":"air"},
-        "Airport Terminal B":{"r":"air"},
-        "Airport Terminal C-D":{"r":"air"},
-        "Airport Terminal E-F":{"r":"air"},
+        "Airport Terminal A":{"r":"apt"},
+        "Airport Terminal B":{"r":"apt"},
+        "Airport Terminal C-D":{"r":"apt"},
+        "Airport Terminal E-F":{"r":"apt"},
         "Allegheny":{"r":"nor"},
         "Allen Lane":{"r":"chw"},
-        "Ambler":{"r":"lan"},
+        "Ambler":{"r":"landdoy"},
         "Angora":{"r":"med"},
         "Ardmore":{"r":"pao"},
-        "Ardsley":{"r":"war"},
+        "Ardsley":{"r":"warm"},
         "Bala":{"r":"cyn"},
         "Berwyn":{"r":"pao"},
-        "Bethayres":{"r":"wtr"},
-        "Bridesburg":{"r":"tre"},
-        "Bristol":{"r":"tre"},
+        "Bethayres":{"r":"wtren"},
+        "Bridesburg":{"r":"trent"},
+        "Bristol":{"r":"trent"},
         "Bryn Mawr":{"r":"pao"},
         "Carpenter":{"r":"chw"},
-        "Chalfont":{"r":"lan"},
+        "Chalfont":{"r":"landdoy"},
         "Chelten Avenue":{"r":"chw"},
-        "Cheltenham":{"r":"fox"},
-        "Chester TC":{"r":"wil"},
+        "Cheltenham":{"r":"fxc"},
+        "Chester TC":{"r":"wilm"},
         "Chestnut Hill East":{"r":"che"},
         "Chestnut Hill West":{"r":"chw"},
-        "Churchmans Crossing":{"r":"wil"},
-        "Claymont":{"r":"wil"},
+        "Churchmans Crossing":{"r":"wilm"},
+        "Claymont":{"r":"wilm"},
         "Clifton-Aldan":{"r":"med"},
-        "Colmar":{"r":"lan"},
+        "Colmar":{"r":"landdoy"},
         "Conshohocken":{"r":"nor"},
-        "Cornwells Heights":{"r":"tre"},
-        "Crestmont":{"r":"war"},
-        "Croydon":{"r":"tre"},
-        "Crum Lynne":{"r":"wil"},
-        "Curtis Park":{"r":"wil"},
+        "Cornwells Heights":{"r":"trent"},
+        "Crestmont":{"r":"warm"},
+        "Croydon":{"r":"trent"},
+        "Crum Lynne":{"r":"wilm"},
+        "Curtis Park":{"r":"wilm"},
         "Cynwyd":{"r":"cyn"},
-        "Darby":{"r":"wil"},
+        "Darby":{"r":"wilm"},
         "Daylesford":{"r":"pao"},
-        "Delaware Valley College":{"r":"lan"},
+        "Delaware Valley College":{"r":"landdoy"},
         "Devon":{"r":"pao"},
         "Downingtown":{"r":"pao"},
-        "Doylestown":{"r":"lan"},
+        "Doylestown":{"r":"landdoy"},
         "East Falls":{"r":"nor"},
-        "Eastwick Station":{"r":"air"},
-        "Eddington":{"r":"tre"},
-        "Eddystone":{"r":"wil"},
+        "Eastwick Station":{"r":"apt"},
+        "Eddington":{"r":"trent"},
+        "Eddystone":{"r":"wilm"},
         "Elkins Park":{},
         "Elm St":{"r":"nor"},
         "Elwyn Station":{"r":"med"},
         "Exton":{"r":"pao"},
         "Fern Rock TC":{},
         "Fernwood":{"r":"med"},
-        "Folcroft":{"r":"wil"},
-        "Forest Hills":{"r":"wtr"},
-        "Fortuna":{"r":"lan"},
-        "Fox Chase":{"r":"fox"},
-        "Ft Washington":{"r":"lan"},
+        "Folcroft":{"r":"wilm"},
+        "Forest Hills":{"r":"wtren"},
+        "Fortuna":{"r":"landdoy"},
+        "Fox Chase":{"r":"fxc"},
+        "Ft Washington":{"r":"landdoy"},
         "Germantown":{"r":"che"},
         "Gladstone":{"r":"med"},
-        "Glenolden":{"r":"wil"},
+        "Glenolden":{"r":"wilm"},
         "Glenside":{},
         "Gravers":{"r":"che"},
-        "Gwynedd Valley":{"r":"lan"},
-        "Hatboro":{"r":"war"},
+        "Gwynedd Valley":{"r":"landdoy"},
+        "Hatboro":{"r":"warm"},
         "Haverford":{"r":"pao"},
-        "Highland Ave":{"r":"wil"},
+        "Highland Ave":{"r":"wilm"},
         "Highland":{"r":"chw"},
-        "Holmesburg Jct":{"r":"tre"},
+        "Holmesburg Jct":{"r":"trent"},
         "Ivy Ridge":{"r":"nor"},
         "Jenkintown-Wyncote":{},
-        "Langhorne":{"r":"wtr"},
-        "Lansdale":{"r":"lan"},
+        "Langhorne":{"r":"wtren"},
+        "Lansdale":{"r":"landdoy"},
         "Lansdowne":{"r":"med"},
-        "Lawndale":{"r":"fox"},
-        "Levittown":{"r":"tre"},
-        "Link Belt":{"r":"lan"},
+        "Lawndale":{"r":"fxc"},
+        "Levittown":{"r":"trent"},
+        "Link Belt":{"r":"landdoy"},
         "Main St":{"r":"nor"},
         "Malvern":{"r":"pao"},
         "Manayunk":{"r":"nor"},
-        "Marcus Hook":{"r":"wil"},
+        "Marcus Hook":{"r":"wilm"},
         "Market East":{"r":"c"},
-        "Meadowbrook":{"r":"wtr"},
+        "Meadowbrook":{"r":"wtren"},
         "Media":{"r":"med"},
         "Melrose Park":{},
         "Merion":{"r":"pao"},
@@ -117,36 +117,36 @@ var m_stops =
         "Moylan-Rose Valley":{"r":"med"},
         "Mt Airy":{"r":"che"},
         "Narberth":{"r":"pao"},
-        "Neshaminy Falls":{"r":"wtr"},
-        "New Britain":{"r":"lan"},
-        "Newark":{"r":"wil"},
-        "Noble":{"r":"wtr"},
+        "Neshaminy Falls":{"r":"wtren"},
+        "New Britain":{"r":"landdoy"},
+        "Newark":{"r":"wilm"},
+        "Noble":{"r":"wtren"},
         "Norristown TC":{"r":"nor"},
         "North Broad St":{},
-        "North Hills":{"r":"lan"},
-        "North Philadelphia":{"r":"tre"},
-        "North Wales":{"r":"lan"},
-        "Norwood":{"r":"wil"},
-        "Olney":{"r":"fox"},
-        "Oreland":{"r":"lan"},
+        "North Hills":{"r":"landdoy"},
+        "North Philadelphia":{"r":"trent"},
+        "North Wales":{"r":"landdoy"},
+        "Norwood":{"r":"wilm"},
+        "Olney":{"r":"fxc"},
+        "Oreland":{"r":"landdoy"},
         "Overbrook":{"r":"pao"},
         "Paoli":{"r":"pao"},
-        "Penllyn":{"r":"lan"},
-        "Pennbrook":{"r":"lan"},
-        "Philmont":{"r":"wtr"},
+        "Penllyn":{"r":"landdoy"},
+        "Pennbrook":{"r":"landdoy"},
+        "Philmont":{"r":"wtren"},
         "Primos":{"r":"med"},
-        "Prospect Park":{"r":"wil"},
+        "Prospect Park":{"r":"wilm"},
         "Queen Lane":{"r":"chw"},
         "Radnor":{"r":"pao"},
-        "Ridley Park":{"r":"wil"},
+        "Ridley Park":{"r":"wilm"},
         "Rosemont":{"r":"pao"},
-        "Roslyn":{"r":"war"},
-        "Rydal":{"r":"wtr"},
-        "Ryers":{"r":"fox"},
+        "Roslyn":{"r":"warm"},
+        "Rydal":{"r":"wtren"},
+        "Ryers":{"r":"fxc"},
         "Secane":{"r":"med"},
         "Sedgwick":{"r":"che"},
-        "Sharon Hill":{"r":"wil"},
-        "Somerton":{"r":"wtr"},
+        "Sharon Hill":{"r":"wilm"},
+        "Somerton":{"r":"wtren"},
         "Spring Mill":{"r":"nor"},
         "St. Davids":{"r":"pao"},
         "St. Martins":{"r":"chw"},
@@ -154,51 +154,52 @@ var m_stops =
         "Strafford":{"r":"pao"},
         "Suburban Station":{"r":"c"},
         "Swarthmore":{"r":"med"},
-        "Tacony":{"r":"tre"},
+        "Tacony":{"r":"trent"},
         "Temple U":{},
         "Thorndale":{"r":"pao"},
-        "Torresdale":{"r":"tre"},
-        "Trenton":{"r":"tre"},
-        "Trevose":{"r":"wtr"},
+        "Torresdale":{"r":"trent"},
+        "Trenton":{"r":"trent"},
+        "Trevose":{"r":"wtren"},
         "Tulpehocken":{"r":"chw"},
         "University City":{},
         "Upsal":{"r":"chw"},
         "Villanova":{"r":"pao"},
         "Wallingford":{"r":"med"},
-        "Warminster":{"r":"war"},
+        "Warminster":{"r":"warm"},
         "Washington Lane":{"r":"che"},
         "Wayne Jct":{},
         "Wayne-A":{"r":"pao","alt":"Wayne Station"},
-        "West Trenton":{"r":"wtr"},
+        "West Trenton":{"r":"wtren"},
         "Whitford":{"r":"pao"},
-        "Willow Grove":{"r":"war"},
-        "Wilmington":{"r":"wil"},
+        "Willow Grove":{"r":"warm"},
+        "Wilmington":{"r":"wilm"},
         "Wissahickon":{"r":"nor"},
         "Wister":{"r":"che"},
-        "Woodbourne":{"r":"wtr"},
+        "Woodbourne":{"r":"wtren"},
         "Wyndmoor":{"r":"che"},
         "Wynnefield Avenue":{"r":"cyn"},
         "Wynnewood":{"r":"pao"},
-        "Yardley":{"r":"wtr"}
+        "Yardley":{"r":"wtren"}
     }
     // route names
     ,   m_routes =
     {
-        "air":"Airport",
+        "apt":"Airport",
         "che":"Chestnut Hill East",
         "chw":"Chestnut Hill West",
         "cyn":"Cynwyd",
-        "fox":"Fox Chase",
-        "lan":"Lansdale/Doylestown",
+        "fxc":"Fox Chase",
+        "landdoy":"Lansdale/Doylestown",
         "med":"Media/Elwyn",
         "nor":"Manayunk/Norristown",
         "pao":"Paoli/Thorndale",
-        "tre":"Trenton",
-        "war":"Warminster",
-        "wil":"Wilmington/Newark",
-        "wtr":"West Trenton"
+        "trent":"Trenton",
+        "warm":"Warminster",
+        "wilm":"Wilmington/Newark",
+        "wtren":"West Trenton"
     }
     ,   m_stop_names = _.map(m_stops, function (value, key) { return (value.alt || key); })
+    ,   m_route_names = _.invert(m_routes)
     ,   m_recent = {}
     ,   m_from = ""
     ,   m_to = ""
@@ -297,11 +298,15 @@ function makeRecentListener(recent)
 
 function makeRouteItem($list, from, to, data, phase)
 {
-    var $item = $("<li></li>").appendTo($list).jqmData("theme", "c")
+    var result = 'rr_route_' + m_route_names[data[phase + "_line"]]
     ,   train = data[phase + "_line"] + " " + data[phase + "_train"]
     ,   depart = data[phase + "_departure_time"] || data[phase + "_depart_time"]
     ,   arrive = data[phase + "_arrival_time"]
     ,   delay = data[phase + "_delay"]
+    ,   $item = $("<li></li>")
+            .jqmData("theme", "c")
+            .addClass(result)
+            .appendTo($list)
     ;
 
     var $link = $("<a></a>")
@@ -315,6 +320,8 @@ function makeRouteItem($list, from, to, data, phase)
     $("<div></div>").appendTo($link).text("@ " + from);
     $("<div></div>").appendTo($link).text("Arrive ").append(makeTime(arrive, delay));
     $("<div></div>").appendTo($link).text("@ " + to);
+
+    return result;
 }
 
 function makeStopListener($input, $list, text)
@@ -441,6 +448,19 @@ $(document).on("pageinit", "#search", function()
 
 $(document).on("pageinit", "#routes", function()
 {
+    function checkAlerts(lines)
+    {
+        _.each(lines, function (value, key)
+        {
+            $.ajax("http://www3.septa.org/hackathon/Alerts/get_alert_data.php",
+            {
+                data: 'req1=' + encodeURIComponent(key),
+                dataType: "jsonp",
+                success: loadAlerts
+            });
+        });
+    }
+
     // fill the route options list
     function load(data)
     {
@@ -452,6 +472,7 @@ $(document).on("pageinit", "#routes", function()
             alert("No route found?!");
             return;
         }
+        var lines = {};
         for (var i = 0; i < data.length; i++)
         {
             var $head = $("<li></li>")
@@ -460,7 +481,7 @@ $(document).on("pageinit", "#routes", function()
                 .text(formatTime(data[i].orig_departure_time) + " - " + formatTime(data[i].term_arrival_time || data[i].orig_arrival_time))
                 .appendTo($list)
                 ;
-            makeRouteItem($list, m_from, data[i].Connection || m_to, data[i], "orig");
+                lines[makeRouteItem($list, m_from, data[i].Connection || m_to, data[i], "orig")] = true;
             if (data[i].isdirect === "true")
             {
                 continue;
@@ -469,10 +490,12 @@ $(document).on("pageinit", "#routes", function()
                 .text(" - 1 connection")
                 .appendTo($head)
                 ;
-            makeRouteItem($list, data[i].Connection, m_to, data[i], "term");
+            lines[makeRouteItem($list, data[i].Connection, m_to, data[i], "term")] = true;
         }
         $list.listview("refresh");
         $list.trigger("updatelayout");
+
+        checkAlerts(lines);
 
         // remember the current from/to, and up to ten previous searches
         var recent =
@@ -494,6 +517,25 @@ $(document).on("pageinit", "#routes", function()
             localStorage.setItem("to", m_to);
         }
     };
+
+    function loadAlerts(data)
+    {
+        for (var i = 0; i < data.length; i++)
+        {
+            if (data[i].current_message && (/^rr_route_/).test(data[i].route_id))
+            {
+                $("<li></li>")
+                    .html(data[i].current_message)
+                    .jqmData("theme", "d")
+                    .insertBefore($('.'+ data[i].route_id))
+                    ;
+            }
+        }
+        $('#routes-list')
+            .listview("refresh")
+            .trigger("updatelayout")
+            ;
+    }
 
     $("#routes").on("pagebeforeshow", function ()
     {
@@ -629,7 +671,7 @@ $(document).on("pageinit", "#detail", function()
         {
             localStorage.setItem("train", m_train);
         }
-    };
+    }
 
     $("#detail").on("pagebeforeshow", function ()
     {

@@ -304,7 +304,7 @@ function makeRouteItem($list, from, to, data, phase)
     ,   arrive = data[phase + "_arrival_time"]
     ,   delay = data[phase + "_delay"]
     ,   $item = $("<li></li>")
-            .jqmData("theme", "c")
+            .attr("data-theme", "c")
             .addClass(result)
             .appendTo($list)
     ;
@@ -372,7 +372,7 @@ function matchNames(str)
 
 function parseTime(str)
 {
-    var result = moment("20000101 " + str, "YYYYMMDDhh:mma");
+    var result = moment("20000101 " + str, "YYYYMMDDhh:mma", true);
     return (result.isValid() ? result : undefined);
 }
 
@@ -395,7 +395,7 @@ function updateRecent()
             ;
         $link = $("<a></a>")
             .attr("href", "javascript:void(0)")
-            .jqmData("icon", "delete")
+            .attr("data-icon", "delete")
             .click(makeRecentDeleteListener(recent[i]))
             .appendTo($item)
             ;
@@ -482,8 +482,8 @@ $(document).on("pageinit", "#routes", function()
         for (var i = 0; i < data.length; i++)
         {
             var $head = $("<li></li>")
-                .jqmData("role", "list-divider")
-                .jqmData("theme", "c")
+                .attr("data-role", "list-divider")
+                .attr("data-theme", "b")
                 .text(formatTime(data[i].orig_departure_time) + " - " + formatTime(data[i].term_arrival_time || data[i].orig_arrival_time))
                 .appendTo($list)
                 ;
@@ -532,7 +532,7 @@ $(document).on("pageinit", "#routes", function()
             {
                 $("<li></li>")
                     .html(data[i].current_message)
-                    .jqmData("theme", "d")
+                    .attr("data-theme", "b")
                     .insertBefore($('.'+ data[i].route_id))
                     ;
             }
@@ -630,19 +630,19 @@ $(document).on("pageinit", "#detail", function()
             {
                 line = newLine;
                 var $head = $("<li></li>")
-                    .jqmData("role", "list-divider")
-                    .jqmData("theme", "c")
+                    .attr("data-role", "list-divider")
+                    .attr("data-theme", "b")
                     .text(m_routes[newLine] + " " + m_train)
                     .appendTo($list)
                     ;
             }
-            var $item = $("<li></li>").appendTo($list).jqmData("theme", "c");
+            var $item = $("<li></li>").appendTo($list).attr("data-theme", "c");
             // change the theme for the "from" and "to" stations
             if (data[i].station === m_from || data[i].station === m_to || data[i].station === m_connection)
             {
                 $item
-                    .jqmData("role", "list-divider")
-                    .jqmData("theme", "a")
+                    .attr("data-role", "list-divider")
+                    .attr("data-theme", "a")
                     ;
             }
             // now add the station details

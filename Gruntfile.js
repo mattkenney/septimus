@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         },
         files: [
           { expand: true, cwd: "dist/css", src: ['**/*.css'], dest: 'css' },
-          { expand: true, cwd: "src/css", src: ['**/*.gif', '**/*.png'], dest: 'css' },
+          { expand: true, cwd: "src/css", src: ['**/ajax-loader.gif'], dest: 'css' },
           { expand: true, cwd: "src/ico", src: ['**/*.png'], dest: 'ico' },
           { expand: true, cwd: "dist/js", src: ['**/*.js'], dest: 'js' },
           { expand: true, cwd: "src", src: ['**/*.html', '**/*.ico'], dest: '.' }

@@ -555,9 +555,9 @@ html .ui-bar-c .ui-body-inherit,
 html .ui-body-c .ui-body-inherit,
 html body .ui-group-theme-c .ui-body-inherit,
 html .ui-panel-page-container-c {
-	background-color: #f8f8f8 /*{c-body-background-color}*/;
+	background-color: #0155a0 /*{c-body-background-color}*/;
 	border-color: #bbb /*{c-body-border}*/;
-	color: #333 /*{c-body-color}*/;
+	color: #fff /*{c-body-color}*/;
 }
 .ui-body-c {
 	border-width: 1px;
@@ -601,9 +601,9 @@ html .ui-bar-c .ui-btn:visited,
 html .ui-body-c .ui-btn:visited,
 html body .ui-group-theme-c .ui-btn:visited,
 html head + body .ui-btn.ui-btn-c:visited {
-	background-color: #f6f6f6 /*{c-bup-background-color}*/;
+	background-color: #0155a0 /*{c-bup-background-color}*/;
 	border-color: #bbb /*{c-bup-border}*/;
-	color: #333 /*{c-bup-color}*/;
+	color: #fff /*{c-bup-color}*/;
 }
 /* Button hover */
 .ui-page-theme-c .ui-btn:hover,
@@ -611,9 +611,9 @@ html .ui-bar-c .ui-btn:hover,
 html .ui-body-c .ui-btn:hover,
 html body .ui-group-theme-c .ui-btn:hover,
 html head + body .ui-btn.ui-btn-c:hover {
-	background-color: #ededed /*{c-bhover-background-color}*/;
+	background-color: #0c5291 /*{c-bhover-background-color}*/;
 	border-color: #bbb /*{c-bhover-border}*/;
-	color: #333 /*{c-bhover-color}*/;
+	color: #fff /*{c-bhover-color}*/;
 }
 /* Button down */
 .ui-page-theme-c .ui-btn:active,
@@ -621,9 +621,9 @@ html .ui-bar-c .ui-btn:active,
 html .ui-body-c .ui-btn:active,
 html body .ui-group-theme-c .ui-btn:active,
 html head + body .ui-btn.ui-btn-c:active {
-	background-color: #e8e8e8 /*{c-bdown-background-color}*/;
+	background-color: #0c5291 /*{c-bdown-background-color}*/;
 	border-color: #bbb /*{c-bdown-border}*/;
-	color: #333 /*{c-bdown-color}*/;
+	color: #fff /*{c-bdown-color}*/;
 }
 /* Active button */
 .ui-page-theme-c .ui-btn.ui-btn-active,

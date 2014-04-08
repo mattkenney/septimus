@@ -262,7 +262,7 @@ function findRoute()
 function formatTime(time)
 {
     var result = time;
-    if (!moment.isMoment(result))
+    if (!((/na/i).test(time) || moment.isMoment(result)))
     {
         result = parseTime(time) || time;
     }
@@ -392,8 +392,8 @@ function matchNames(str)
 
 function parseTime(str)
 {
-    var result = moment("20000101 " + str, "YYYYMMDDhh:mma", true);
-    return (result.isValid() ? result : undefined);
+    var result = (/na/i).test(str) ? undefined : moment("20000101 " + str, "YYYYMMDDhhmma", false);
+    return ((result && result.isValid()) ? result : undefined);
 }
 
 function updateRecent()

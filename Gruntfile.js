@@ -28,7 +28,7 @@ module.exports = function (grunt) {
       },
       deploy: {
         options: {
-          bucket: 'www.phillytrain.com'
+          bucket: 'origin.phillytrain.com'
         },
         files: [
           { expand: true, cwd: "dist/css", src: ['**/*.css'], dest: 'css' },
